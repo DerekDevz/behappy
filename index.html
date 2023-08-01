@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Video Website</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        #video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div id="video-container">
+        <video id="video" autoplay loop playsinline>
+            <source src="pnkmlt.mov" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <script>
+        const videoElement = document.getElementById("video");
+        videoElement.volume = 1; // Set the video's volume to 100%
+
+        // Play the video when the page loads
+        videoElement.play();
+
+        // Ensure that the video continues playing after it ends
+        videoElement.addEventListener('ended', function () {
+            videoElement.currentTime = 0;
+            videoElement.play();
+        });
+
+        // Open the video in fullscreen when clicked
+        document.addEventListener('click', function () {
+            if (videoElement.requestFullscreen) {
+                videoElement.requestFullscreen();
+            } else if (videoElement.mozRequestFullScreen) {
+                videoElement.mozRequestFullScreen();
+            } else if (videoElement.webkitRequestFullscreen) {
+                videoElement.webkitRequestFullscreen();
+            } else if (videoElement.msRequestFullscreen) {
+                videoElement.msRequestFullscreen();
+            }
+        });
+
+        // Ask the user before leaving the page
+        window.addEventListener('beforeunload', function (e) {
+            e.preventDefault();
+            e.returnValue = '';
+        });
+    </script>
+</body>
+</html>
